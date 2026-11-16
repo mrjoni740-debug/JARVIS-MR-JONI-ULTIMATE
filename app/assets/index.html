@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#030912">
+
+<title>JARVIS | MR. JONI</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:#030912;
+ color:#eafaff;
+ font-family:Arial,sans-serif;
+ min-height:100vh;
+}
+
+header{
+ padding:18px;
+ text-align:center;
+ border-bottom:1px solid #07516b;
+ background:#071421;
+}
+
+.logo{
+ color:#00eaff;
+ font-size:30px;
+ font-weight:bold;
+ letter-spacing:5px;
+ text-shadow:0 0 15px #00eaff;
+}
+
+.sub{
+ color:#8baab8;
+ font-size:11px;
+ letter-spacing:3px;
+ margin-top:7px;
+}
+
+.status{
+ color:#00ffae;
+ font-size:12px;
+ margin-top:12px;
+}
+
+main{
+ max-width:650px;
+ margin:auto;
+ padding:15px;
+}
+
+.panel{
+ border:1px solid #07516b;
+ background:#071421;
+ border-radius:14px;
+ padding:16px;
+ margin-bottom:15px;
+ box-shadow:0 0 15px #002c40;
+}
+
+.panel-title{
+ color:#00eaff;
+ font-size:12px;
+ letter-spacing:2px;
+ margin-bottom:12px;
+}
+
+.clock{
+ font-size:34px;
+ text-align:center;
+ font-weight:bold;
+ color:#00eaff;
+}
+
+.date{
+ text-align:center;
+ color:#9db8c7;
+ font-size:13px;
+ margin-top:5px;
+}
+
+.core{
+ width:135px;
+ height:135px;
+ margin:18px auto;
+ border-radius:50%;
+ border:3px solid #00eaff;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ color:#00eaff;
+ font-size:23px;
+ font-weight:bold;
+ box-shadow:0 0 20px #00bfff,
+ inset 0 0 20px #005c82;
+ animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+ 50%{box-shadow:0 0 35px #00eaff,
+ inset 0 0 30px #006d91}
+}
+
+#chat{
+ height:290px;
+ overflow-y:auto;
+ display:flex;
+ flex-direction:column;
+ gap:12px;
+}
+
+.msg{
+ padding:11px;
+ border-radius:10px;
+ font-size:14px;
+ line-height:1.5;
+ max-width:90%;
+ white-space:pre-wrap;
+}
+
+.bot{
+ background:#102c40;
+ border-left:3px solid #00eaff;
+ align-self:flex-start;
+}
+
+.user{
+ background:#064c61;
+ border-right:3px solid #00ffae;
+ align-self:flex-end;
+}
+
+.input-area{
+ display:flex;
+ gap:7px;
+ margin-top:12px;
+}
+
+input{
+ flex:1;
+ min-width:0;
+ background:#020b14;
+ border:1px solid #08708e;
+ border-radius:9px;
+ padding:13px;
+ color:white;
+ outline:none;
+ font-size:14px;
+}
+
+button{
+ border:1px solid #00bddd;
+ background:#06344a;
+ color:#00eaff;
+ border-radius:9px;
+ padding:11px 14px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+button:active{
+ background:#08708e;
+}
+
+.controls{
+ display:flex;
+ justify-content:center;
+ gap:12px;
+ flex-wrap:wrap;
+ margin-top:15px;
+}
+
+footer{
+ text-align:center;
+ color:#607d8b;
+ font-size:11px;
+ padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">J.A.R.V.I.S.</div>
+ <div class="sub">JUST A RATHER VERY INTELLIGENT SYSTEM</div>
+ <div class="status">● SYSTEM ONLINE</div>
+</header>
+
+<main>
+
+ <section class="panel">
+  <div class="panel-title">SYSTEM MONITOR</div>
+  <div class="clock" id="clock">00:00:00</div>
+  <div class="date" id="date">Loading...</div>
+  <div class="core">JONI AI</div>
+  <div style="text-align:center;color:#00ffae;font-size:12px">
+   MR. JONI ULTIMATE SYSTEM
+  </div>
+ </section>
+
+ <section class="panel">
+  <div class="panel-title">AI COMMUNICATION TERMINAL</div>
+
+  <div id="chat">
+   <div class="msg bot">
+    नमस्ते MR. JONI!
+
+    मैं आपका JARVIS Assistant हूँ।
+    आप मुझसे हिंदी या अंग्रेजी में बात कर सकते हैं।
+
+    बताइए, मैं आपकी क्या सहायता करूँ?
+   </div>
+  </div>
+
+  <div class="input-area">
+   <input
+    id="message"
+    type="text"
+    placeholder="Type your message..."
+    onkeydown="if(event.key==='Enter')sendMessage()"
+   >
+   <button onclick="sendMessage()">SEND</button>
+  </div>
+
+  <div class="controls">
+   <button onclick="startVoice()">🎤 MIC</button>
+   <button onclick="stopVoice()">■ STOP</button>
+   <button onclick="clearChat()">CLEAR</button>
+  </div>
+ </section>
+
+ <section class="panel">
+  <div class="panel-title">SYSTEM INFORMATION</div>
+  <div style="font-size:13px;line-height:2;color:#a8c6d5">
+   Developer: MR. JONI<br>
+   Interface: Android WebView<br>
+   Voice: Browser Speech Support<br>
+   AI Backend: Not Connected Yet
+  </div>
+ </section>
+
+</main>
+
+<footer>
+ JARVIS MR. JONI ULTIMATE © 2026
+</footer>
+
+<script>
+
+function updateClock(){
+ const now=new Date();
+
+ document.getElementById("clock").textContent=
+ now.toLocaleTimeString("en-IN");
+
+ document.getElementById("date").textContent=
+ now.toLocaleDateString("hi-IN",{
+  weekday:"long",
+  year:"numeric",
+  month:"long",
+  day:"numeric"
+ });
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+const chat=document.getElementById("chat");
+const input=document.getElementById("message");
+
+function addMessage(text,type){
+ const div=document.createElement("div");
+ div.className="msg "+type;
+ div.textContent=text;
+ chat.appendChild(div);
+ chat.scrollTop=chat.scrollHeight;
+}
+
+function speak(text){
+ if(!("speechSynthesis" in window))return;
+
+ window.speechSynthesis.cancel();
+
+ const speech=new SpeechSynthesisUtterance(text);
+ speech.lang="hi-IN";
+ speech.rate=1;
+
+ window.speechSynthesis.speak(speech);
+}
+
+function sendMessage(){
+ const text=input.value.trim();
+
+ if(!text)return;
+
+ addMessage(text,"user");
+ input.value="";
+
+ let answer="मैं अभी बेसिक मोड में हूँ। AI Backend कनेक्ट होने के बाद मैं आपके सवालों के जवाब दे सकूँगा।";
+
+ if(text.toLowerCase().includes("hello") ||
+    text.toLowerCase().includes("नमस्ते")){
+  answer="नमस्ते MR. JONI! JARVIS आपके लिए तैयार है।";
+ }
+
+ if(text.toLowerCase().includes("time") ||
+    text.toLowerCase().includes("समय")){
+  answer="अभी का समय "+new Date().toLocaleTimeString("hi-IN");
+ }
+
+ if(text.toLowerCase().includes("नाम")){
+  answer="मेरा नाम JARVIS है। मेरे Developer MR. JONI हैं।";
+ }
+
+ setTimeout(()=>{
+  addMessage(answer,"bot");
+  speak(answer);
+ },400);
+}
+
+let recognition=null;
+
+function startVoice(){
+
+ const SpeechRecognition=
+ window.SpeechRecognition ||
+ window.webkitSpeechRecognition;
+
+ if(!SpeechRecognition){
+  addMessage(
+   "इस डिवाइस या WebView में Voice Recognition उपलब्ध नहीं है।",
+   "bot"
+  );
+  return;
+ }
+
+ recognition=new SpeechRecognition();
+ recognition.lang="hi-IN";
+ recognition.continuous=false;
+ recognition.interimResults=false;
+
+ recognition.onresult=function(event){
+  input.value=event.results[0][0].transcript;
+  sendMessage();
+ };
+
+ recognition.onerror=function(){
+  addMessage("Voice input में समस्या आई। दोबारा कोशिश करें।","bot");
+ };
+
+ recognition.start();
+}
+
+function stopVoice(){
+ if(recognition)recognition.stop();
+
+ if("speechSynthesis" in window){
+  window.speechSynthesis.cancel();
+ }
+}
+
+function clearChat(){
+ chat.innerHTML="";
+ addMessage("JARVIS Terminal Ready. MR. JONI, बताइए क्या करना है?","bot");
+}
+
+</script>
+
+</body>
+</html>
