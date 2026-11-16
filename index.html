@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#020914">
+<title>JARVIS MARK 85 | MR. JONI</title>
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;background:#020914;color:#00eaff;
+font-family:Arial,sans-serif;text-align:center;
+min-height:100vh;padding:20px;
+}
+h1{letter-spacing:5px;margin-top:35px}
+.core{
+width:190px;height:190px;border:3px solid #00eaff;
+border-radius:50%;margin:35px auto;
+display:grid;place-items:center;
+box-shadow:0 0 30px #00aaff,inset 0 0 25px #0077ff;
+animation:pulse 2s infinite;
+}
+.core span{font-size:35px}
+@keyframes pulse{
+50%{box-shadow:0 0 55px #00eaff,inset 0 0 40px #0077ff}
+}
+.panel{
+border:1px solid #087caa;border-radius:15px;
+padding:18px;margin:15px auto;max-width:500px;
+background:#061727;
+}
+button{
+background:#00dfff;color:#00121c;
+border:0;padding:13px 20px;
+border-radius:9px;font-weight:bold;margin:5px;
+}
+input{
+width:95%;padding:14px;border-radius:8px;
+border:1px solid #00dfff;background:#00101d;
+color:white;margin:10px 0;
+}
+#chat{text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<h1>J.A.R.V.I.S.</h1>
+<p>MARK 85 • ULTIMATE AI</p>
+<div class="core"><span>J</span></div>
+<div class="panel">
+<h3>SYSTEM STATUS</h3>
+<p id="status">SYSTEM ONLINE</p>
+<p id="clock"></p>
+</div>
+<div class="panel">
+<h3>AI COMMUNICATION</h3>
+<div id="chat">Hello MR. JONI! JARVIS is ready.</div>
+<input id="message" placeholder="Ask JARVIS anything...">
+<button onclick="send()">SEND</button>
+<button onclick="speak()">VOICE</button>
+</div>
+<script>
+function updateClock(){
+document.getElementById("clock").textContent=
+new Date().toLocaleString("hi-IN");
+}
+setInterval(updateClock,1000);
+updateClock();
+
+function send(){
+const input=document.getElementById("message");
+const chat=document.getElementById("chat");
+if(!input.value.trim())return;
+chat.textContent+="\n\nMR. JONI: "+input.value;
+chat.textContent+="\nJARVIS: AI connection is being configured.";
+input.value="";
+}
+function speak(){
+const text=document.getElementById("chat").textContent;
+if("speechSynthesis" in window){
+speechSynthesis.cancel();
+speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+}
+}
+</script>
+</body>
+</html>
